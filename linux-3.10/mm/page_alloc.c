@@ -2726,7 +2726,14 @@ EXPORT_SYMBOL(get_zeroed_page);
 
 void __free_pages(struct page *page, unsigned int order)
 {
-	if (put_page_testzero(page)) {
+	int i;
+	
+	if (put_page_testzero(page))
+	{
+		// Zeroing Memory
+		for(i = 0; i < (1 << order); i++)
+			memset(page_address(page+i), 0, PAGE_SIZE);
+			
 		if (order == 0)
 			free_hot_cold_page(page, 0);
 		else
