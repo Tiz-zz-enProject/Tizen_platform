@@ -2745,8 +2745,13 @@ EXPORT_SYMBOL(__free_pages);
 
 void free_pages(unsigned long addr, unsigned int order)
 {
-	if (addr != 0) {
+	if (addr != 0)
+	{
 		VM_BUG_ON(!virt_addr_valid((void *)addr));
+		
+		// Zeroing Memory
+		memset((void*)addr, 0, (PAGE_SIZE << order));
+		
 		__free_pages(virt_to_page((void *)addr), order);
 	}
 }
