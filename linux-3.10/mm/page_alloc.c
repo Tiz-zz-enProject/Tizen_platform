@@ -1337,6 +1337,9 @@ void free_hot_cold_page(struct page *page, int cold)
 
 	if (!free_pages_prepare(page, 0))
 		return;
+	
+	// Zeroing Memory
+	memset(page_address(page), 0, PAGE_SIZE);
 
 	migratetype = get_pageblock_migratetype(page);
 	set_freepage_migratetype(page, migratetype);
