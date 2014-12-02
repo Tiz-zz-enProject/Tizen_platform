@@ -65,6 +65,24 @@
 #include <asm/div64.h>
 #include "internal.h"
 
+/*
+ * Here!!!
+ * - Define macro variable
+ * - Define smack_flag variable
+ * - Define smack_flag fuction
+ */
+#define ON	1
+#define OFF	0
+int smack_flag = OFF;
+void smack_enable(void)
+{
+	smack_flag = ON;
+}
+void smack_disable(void)
+{
+	smack_flag = OFF;
+}
+
 #ifdef CONFIG_USE_PERCPU_NUMA_NODE_ID
 DEFINE_PER_CPU(int, numa_node);
 EXPORT_PER_CPU_SYMBOL(numa_node);
@@ -1338,8 +1356,16 @@ void free_hot_cold_page(struct page *page, int cold)
 	if (!free_pages_prepare(page, 0))
 		return;
 	
-	// Zeroing Memory
-	memset(page_address(page), 0, PAGE_SIZE);
+	/*
+	 * Here!!!
+	 * - Check the state of smack_flag
+	 * - Zeroing memory if smack_flag is enable
+	 */
+	if(smack_flag == ON)
+	{
+		memset(page_address(page), 0, PAGE_SIZE);
+		smack_flag = OFF;
+	}
 
 	migratetype = get_pageblock_migratetype(page);
 	set_freepage_migratetype(page, migratetype);
@@ -2730,9 +2756,17 @@ void __free_pages(struct page *page, unsigned int order)
 	
 	if (put_page_testzero(page))
 	{
-		// Zeroing Memory
-		for(i = 0; i < (1 << order); i++)
-			memset(page_address(page+i), 0, PAGE_SIZE);
+		/*
+		 * Here!!!
+		 * - Check the state of smack_flag
+		 * - Zeroing memory if smack_flag is enable
+		 */
+		if(smack_flag == ON)
+		{
+			for(i = 0; i < (1 << order); i++)
+				memset(page_address(page+i), 0, PAGE_SIZE);
+			smack_flag = OFF;
+		}
 			
 		if (order == 0)
 			free_hot_cold_page(page, 0);
@@ -2749,8 +2783,16 @@ void free_pages(unsigned long addr, unsigned int order)
 	{
 		VM_BUG_ON(!virt_addr_valid((void *)addr));
 		
-		// Zeroing Memory
-		memset((void*)addr, 0, (PAGE_SIZE << order));
+		/*
+		 * Here!!!
+		 * - Check the state of smack_flag
+		 * - Zeroing memory if smack_flag is enable
+		 */
+		if(smack_flag == ON)
+		{
+			memset((void*)addr, 0, (PAGE_SIZE << order));
+			smack_flag = OFF;
+		}
 		
 		__free_pages(virt_to_page((void *)addr), order);
 	}
