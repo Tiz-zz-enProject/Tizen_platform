@@ -42,6 +42,7 @@
 #include <linux/shm.h>
 #include <linux/binfmts.h>
 #include "smack.h"
+#include "/home/tizen/tizen/linux-3.10/mm/page_alloc.c"
 
 #define task_security(task)	(task_cred_xxx((task), security))
 
@@ -80,7 +81,9 @@ static struct smack_known *smk_fetch(const char *name, struct inode *ip,
 	if (rc > 0)
 		skp = smk_import_entry(buffer, rc);
 
+	smack_enable();
 	kfree(buffer);
+	smack_disable();
 
 	return skp;
 }
@@ -274,8 +277,10 @@ static int smack_sb_alloc_security(struct super_block *sb)
  */
 static void smack_sb_free_security(struct super_block *sb)
 {
+	smack_enable();
 	kfree(sb->s_security);
 	sb->s_security = NULL;
+	smack_disable();
 }
 
 /**
@@ -564,8 +569,10 @@ static int smack_inode_alloc_security(struct inode *inode)
  */
 static void smack_inode_free_security(struct inode *inode)
 {
+	smack_enable();
 	kfree(inode->i_security);
 	inode->i_security = NULL;
+	smack_enable();
 }
 
 /**
