@@ -1446,9 +1446,13 @@ static void smack_cred_free(struct cred *cred)
 	list_for_each_safe(l, n, &tsp->smk_rules) {
 		rp = list_entry(l, struct smack_rule, list);
 		list_del(&rp->list);
+		smack_enable();
 		kfree(rp);
+		smack_disable();
 	}
+	smack_enable();
 	kfree(tsp);
+	smack_disable();
 }
 
 /**
@@ -1799,7 +1803,9 @@ static int smack_sk_alloc_security(struct sock *sk, int family, gfp_t gfp_flags)
  */
 static void smack_sk_free_security(struct sock *sk)
 {
+	smack_enable();
 	kfree(sk->sk_security);
+	smack_disable();
 }
 
 /**
