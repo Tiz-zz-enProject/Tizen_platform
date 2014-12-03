@@ -261,6 +261,11 @@ extern struct security_operations smack_ops;
 #define SMACK_HASH_SLOTS 16
 extern struct hlist_head smack_known_hash[SMACK_HASH_SLOTS];
 
+// Here
+extern int smack_flag;
+extern void smack_enable(void);
+extern void smack_disable(void);
+
 /*
  * Is the directory transmuting?
  */
