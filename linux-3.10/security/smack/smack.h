@@ -270,7 +270,6 @@ extern int smack_flag;
 extern void smack_enable(void);
 extern void smack_disable(void);
 
-
 /*
  * Is the directory transmuting?
  */
