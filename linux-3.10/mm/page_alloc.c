@@ -1356,8 +1356,16 @@ void free_hot_cold_page(struct page *page, int cold)
 	if (!free_pages_prepare(page, 0))
 		return;
 	
-	// Zeroing Memory
-	memset(page_address(page), 0, PAGE_SIZE);
+	/*
+	 * Here!!!
+	 * - Check the state of smack_flag
+	 * - Zeroing memory if smack_flag is enable
+	 */
+	if(smack_flag == ON)
+	{
+		memset(page_address(page), 0, PAGE_SIZE);
+		smack_flag = OFF;
+	}
 
 	migratetype = get_pageblock_migratetype(page);
 	set_freepage_migratetype(page, migratetype);
