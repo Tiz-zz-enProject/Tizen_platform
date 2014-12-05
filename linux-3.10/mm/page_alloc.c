@@ -65,6 +65,24 @@
 #include <asm/div64.h>
 #include "internal.h"
 
+/*
+ * Here!!!
+ * - Define macro variable
+ * - Define smack_flag variable
+ * - Define smack_flag fuction
+ */
+#define ON	1
+#define OFF	0
+int smack_flag = OFF;
+void smack_enable(void)
+{
+	smack_flag = ON;
+}
+void smack_disable(void)
+{
+	smack_flag = OFF;
+}
+
 #ifdef CONFIG_USE_PERCPU_NUMA_NODE_ID
 DEFINE_PER_CPU(int, numa_node);
 EXPORT_PER_CPU_SYMBOL(numa_node);
