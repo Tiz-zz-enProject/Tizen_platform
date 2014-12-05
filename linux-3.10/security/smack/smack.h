@@ -266,9 +266,9 @@ extern struct hlist_head smack_known_hash[SMACK_HASH_SLOTS];
  * - Define external smack_flag variable
  * - Define external smack_flag function
  */
-int smack_flag;
-void smack_enable(void);
-void smack_disable(void);
+extern int smack_flag;
+extern void smack_enable(void);
+extern void smack_disable(void);
 
 /*
  * Is the directory transmuting?
