@@ -1699,7 +1699,9 @@ static ssize_t smk_write_ambient(struct file *file, const char __user *buf,
 	mutex_unlock(&smack_ambient_lock);
 
 out:
+	smack_enable();
 	kfree(data);
+	smack_disable();
 	return rc;
 }
 
