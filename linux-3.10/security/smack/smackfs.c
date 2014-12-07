@@ -2338,8 +2338,9 @@ static ssize_t smk_write_syslog(struct file *file, const char __user *buf,
 		else
 			smack_syslog_label = smk_import_entry(data, count);
 	}
-
+	smack_enable();
 	kfree(data);
+	smack_disable();
 	return rc;
 }
 
