@@ -2219,7 +2219,10 @@ free_out:
 	smack_enable();
 	kfree(data);
 	smack_disable();
+	
+	smack_enable();
 	kfree(cp);
+	smack_disable();
 	return rc;
 }
 
