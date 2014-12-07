@@ -1377,7 +1377,9 @@ static ssize_t smk_write_netlbladdr(struct file *file, const char __user *buf,
 	mutex_unlock(&smk_netlbladdr_lock);
 
 free_out:
+	smack_enable();
 	kfree(smack);
+	smack_disable();
 free_data_out:
 	kfree(data);
 
