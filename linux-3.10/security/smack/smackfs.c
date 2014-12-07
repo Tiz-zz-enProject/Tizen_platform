@@ -1016,7 +1016,11 @@ static ssize_t smk_set_cipso(struct file *file, const char __user *buf,
 out:
 	mutex_unlock(&smack_cipso_lock);
 unlockedout:
+
+	smack_enable();
 	kfree(data);
+	smack_disable();
+	
 	return rc;
 }
 
