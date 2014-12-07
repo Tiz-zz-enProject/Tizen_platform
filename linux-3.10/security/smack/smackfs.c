@@ -340,7 +340,11 @@ static int smk_fill_rule(const char *subject, const char *object,
 		if (cp == NULL)
 			return -1;
 		skp = smk_find_entry(cp);
+		
+		smack_enable();
 		kfree(cp);
+		smack_disable();
+		
 		if (skp == NULL)
 			return -1;
 		rule->smk_subject = skp;
