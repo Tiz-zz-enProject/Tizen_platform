@@ -27,7 +27,12 @@
 #include <linux/ctype.h>
 #include <linux/audit.h>
 #include <linux/magic.h>
+
+/*
+ * - include external files
+ */
 #include "smack.h"
+#include "../mm/page_alloc.c" /* Path to pa*/
 
 /*
  * smackfs pseudo filesystem.
