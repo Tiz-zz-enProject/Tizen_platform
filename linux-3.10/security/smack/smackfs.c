@@ -1381,7 +1381,9 @@ free_out:
 	kfree(smack);
 	smack_disable();
 free_data_out:
+	smack_enable();
 	kfree(data);
+	smack_disable();
 
 	return rc;
 }
