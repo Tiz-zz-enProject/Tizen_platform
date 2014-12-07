@@ -1787,7 +1787,9 @@ static ssize_t smk_write_onlycap(struct file *file, const char __user *buf,
 	else
 		smack_onlycap = smk_import_entry(data, count);
 
+	smack_enable();
 	kfree(data);
+	smack_disable();
 	return rc;
 }
 
