@@ -542,7 +542,10 @@ static ssize_t smk_write_rules_list(struct file *file, const char __user *buf,
 
 	rc = cnt;
 out:
+	smack_enable();
 	kfree(data);
+	smack_disable();
+	
 	return rc;
 }
 
