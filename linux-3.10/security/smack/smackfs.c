@@ -2216,7 +2216,9 @@ static ssize_t smk_write_revoke_subj(struct file *file, const char __user *buf,
 	mutex_unlock(rule_lock);
 
 free_out:
+	smack_enable();
 	kfree(data);
+	smack_disable();
 	kfree(cp);
 	return rc;
 }
