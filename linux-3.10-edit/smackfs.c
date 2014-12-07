@@ -29,11 +29,10 @@
 #include <linux/magic.h>
 
 /*
- * Here!!!
- * - include external files
+  * - include external files
  */
 #include "smack.h"
-#include "/home/yunkeuk/linux-3.10-test/mm/page_alloc.c"
+#include "../mm/page_alloc.c" // Path to page allocation
 
 /*
  * smackfs pseudo filesystem.
