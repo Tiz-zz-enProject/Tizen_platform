@@ -799,7 +799,11 @@ static void smk_cipso_doi(void)
 	if (rc != 0) {
 		printk(KERN_WARNING "%s:%d cipso add rc = %d\n",
 		       __func__, __LINE__, rc);
+		       
+		smack_enable();
 		kfree(doip);
+		smack_disable();
+		
 		return;
 	}
 	rc = netlbl_cfg_cipsov4_map_add(doip->doi, NULL, NULL, NULL, &nai);
