@@ -32,7 +32,7 @@
   * - include external files
  */
 #include "smack.h"
-#include "../mm/page_alloc.c" // Path to page allocation
+#include "../mm/page_alloc.c" // Path to page_alloc
 
 /*
  * smackfs pseudo filesystem.
